@@ -20,7 +20,10 @@ app.use(express.static("public"));
 
 
 app.get('/', function(req, res){
-    res.render('home',{con: homestattingcontent,BP : BlogPosts});
+    res.render('home',{
+        con: homestattingcontent,
+        BP : BlogPosts
+    });
     
 });
 
@@ -49,12 +52,14 @@ app.get('/posts/:postNames', function(req, res){
     const reqTitle = _.lowerCase(req.params.postNames);
     BlogPosts.forEach(post => {
         const storedTitle = _.lowerCase(post.title);
-        if (storedTitle === reqTitle) {
-            console.log('Match found');
+        if (storedTitle === reqTitle){
+            
+            res.render('post', {
+                t: post.title,
+                c: post.content
+            })
         }
-        else{
-            console.log('Match not found');
-        }
+        
         
     });
 })
